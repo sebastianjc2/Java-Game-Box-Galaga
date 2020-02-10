@@ -76,6 +76,13 @@ public class GalagaState extends State {
                     break;
                 case 3:
                     g.setColor(Color.GREEN);
+                    break;
+                case 4:
+                	g.setColor(Color.WHITE);
+                	break;
+                case 5:
+                	g.setColor(Color.MAGENTA);
+                	break;
             }
             int randX = random.nextInt(handler.getWidth() - handler.getWidth() / 2) + handler.getWidth() / 4;
             int randY = random.nextInt(handler.getHeight());
