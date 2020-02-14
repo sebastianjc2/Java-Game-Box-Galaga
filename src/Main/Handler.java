@@ -25,6 +25,7 @@ public class Handler {
     private MusicHandler musicHandler;
     private ArrayList<Clip> effects;
     private State lastState;
+    //When set to false, makes red square disappear
     public static boolean DEBUG = true;
 
     public Handler(GameSetUp game){

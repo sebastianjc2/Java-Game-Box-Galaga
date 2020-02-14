@@ -57,14 +57,14 @@ public class GalagaState extends State {
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.DARK_GRAY);
+        g.setColor(Color.BLACK);
         g.fillRect(0,0,handler.getWidth(),handler.getHeight());
         g.setColor(Color.BLACK);
         g.fillRect(handler.getWidth()/4,0,handler.getWidth()/2,handler.getHeight());
         Random random = new Random(System.nanoTime());
 
         for (int j = 1;j < random.nextInt(15)+60;j++) {
-            switch (random.nextInt(4)) {
+            switch (random.nextInt(8)) {
                 case 0:
                     g.setColor(Color.RED);
                     break;
@@ -83,6 +83,12 @@ public class GalagaState extends State {
                 case 5:
                 	g.setColor(Color.MAGENTA);
                 	break;
+                case 6:
+                    g.setColor(Color.CYAN);
+                    break;
+                case 7:
+                    g.setColor(Color.ORANGE);
+                    break;
             }
             int randX = random.nextInt(handler.getWidth() - handler.getWidth() / 2) + handler.getWidth() / 4;
             int randY = random.nextInt(handler.getHeight());
@@ -90,11 +96,11 @@ public class GalagaState extends State {
 
         }
         if (Mode.equals("Stage")) {
-            g.setColor(Color.RED);
+            g.setColor(Color.CYAN); // Changes in game High Score word color
             g.setFont(new Font("TimesRoman", Font.PLAIN, 62));
             g.drawString("HIGH",handler.getWidth()-handler.getWidth()/4,handler.getHeight()/16);
             g.drawString("SCORE",handler.getWidth()-handler.getWidth()/4+handler.getWidth()/48,handler.getHeight()/8);
-            g.setColor(Color.WHITE);
+            g.setColor(Color.WHITE); // Changes the in game High Score counter color
             g.drawString(String.valueOf(handler.getScoreManager().getGalagaHighScore()),handler.getWidth()-handler.getWidth()/4+handler.getWidth()/48,handler.getHeight()/5);
             for (int i = 0; i< entityManager.playerShip.getHealth();i++) {
                 g.drawImage(Images.galagaPlayer[0], (handler.getWidth() - handler.getWidth() / 4 + handler.getWidth() / 48) + ((entityManager.playerShip.width*2)*i), handler.getHeight()-handler.getHeight()/4, handler.getWidth() / 18, handler.getHeight() / 18, null);
@@ -103,14 +109,15 @@ public class GalagaState extends State {
                 entityManager.render(g);
             }else{
                 g.setFont(new Font("TimesRoman", Font.PLAIN, 48));
-                g.setColor(Color.RED);
-                g.drawString("Start",handler.getWidth()/2-handler.getWidth()/18,handler.getHeight()/2);
+                g.setColor(Color.CYAN);// Sets the color of "Start" word when the game starts
+                g.drawString("START!",handler.getWidth()/2-handler.getWidth()/18,handler.getHeight()/2);
+                //Try to implement a ready set go fashion
             }
         }else{
 
             g.setFont(new Font("TimesRoman", Font.PLAIN, 32));
 
-            g.setColor(Color.RED);
+            g.setColor(Color.BLUE);// Sets the Color for the High School in the game menu
             g.drawString("HIGH-SCORE:",handler.getWidth()/2-handler.getWidth()/18,32);
 
             g.setColor(Color.WHITE);
