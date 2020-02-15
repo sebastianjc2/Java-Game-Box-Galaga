@@ -59,6 +59,15 @@ public class PlayerShip extends BaseEntity{
             if (handler.getKeyManager().right) {
                 x += (speed);
             }
+            if(handler.getKeyManager().suicide){
+                health--;
+                destroyed = true;
+                handler.getMusicHandler().playEffect("explosion.wav");
+                bounds.x = -10;
+            }
+            if (handler.getKeyManager().life_up && health != 3){
+                health++;
+            }
 
             bounds.x = x;
         }

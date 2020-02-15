@@ -11,7 +11,7 @@ import java.awt.event.KeyListener;
 public class KeyManager implements KeyListener {
 
 	private boolean[] keys,justPressed,cantPress;
-	public boolean up=false, down=false, left=false, right=false;
+	public boolean up=false, down=false, left=false, right=false, suicide=false, life_up=false;
 	public boolean pausebutt=false;
 
 
@@ -41,9 +41,9 @@ public class KeyManager implements KeyListener {
 		down = keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN];
 		left = keys[KeyEvent.VK_A] || keys[KeyEvent.VK_LEFT];
 		right = keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT];
-
 		pausebutt = keys[KeyEvent.VK_ESCAPE];
-
+		suicide = keys[KeyEvent.VK_N];
+		life_up = keys[KeyEvent.VK_L];
 	}
 
 	@Override

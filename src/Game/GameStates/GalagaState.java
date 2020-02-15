@@ -36,6 +36,7 @@ public class GalagaState extends State {
                 entityManager.tick();
             }else{
                 startCooldown--;
+
             }
         }else{
             titleAnimation.tick();
