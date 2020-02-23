@@ -24,8 +24,11 @@ public class GalagaState extends State {
     public GalagaState(Handler handler){
         super(handler);
         refresh();
+        int row = random.nextInt(4);
+        int
         entityManager = new EntityManager(new PlayerShip(handler.getWidth()/2-64,handler.getHeight()- handler.getHeight()/7,64,64,Images.galagaPlayer[0],handler));
         titleAnimation = new Animation(256,Images.galagaLogo);
+        entityManager = new EntityManager(new EnemyBee((handler.getWidth()/4) + (handler.getWidth()/2)/(8))+8,(handler.getHeight()/10)+8, 64, 64 ,handler, random.nextInt(4),random.nextINt(4)));
     }
 
 
