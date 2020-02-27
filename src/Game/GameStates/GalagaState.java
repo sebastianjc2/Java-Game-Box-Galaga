@@ -19,13 +19,13 @@ public class GalagaState extends State {
     public String Mode = "Menu";
     private Animation titleAnimation;
     public int selectPlayers = 1;
-    public int startCooldown = 60*7;//seven seconds for the music to finish
+    public int startCooldown = 7;//seven seconds for the music to finish
 
     public GalagaState(Handler handler){
         super(handler);
         refresh();
         entityManager = new EntityManager(new PlayerShip(handler.getWidth()/2-64,handler.getHeight()- handler.getHeight()/7,64,64,Images.galagaPlayer[0],handler));
-        titleAnimation = new Animation(256,Images.galagaLogo);
+        titleAnimation = new Animation(256,Images.galagaLogo); 
     }
 
 
@@ -101,8 +101,10 @@ public class GalagaState extends State {
             g.setFont(new Font("TimesRoman", Font.PLAIN, 62));
             g.drawString("HIGH",handler.getWidth()-handler.getWidth()/4,handler.getHeight()/16);
             g.drawString("SCORE",handler.getWidth()-handler.getWidth()/4+handler.getWidth()/48,handler.getHeight()/8);
+            g.drawString("SCORE",handler.getWidth()-handler.getWidth()/4+handler.getWidth()/48,handler.getHeight()/8 + 250);
             g.setColor(Color.WHITE); // Changes the in game High Score counter color
             g.drawString(String.valueOf(handler.getScoreManager().getGalagaHighScore()),handler.getWidth()-handler.getWidth()/4+handler.getWidth()/48,handler.getHeight()/5);
+            g.drawString(String.valueOf(handler.getScoreManager().getGalagaCurrentScore()),handler.getWidth()-handler.getWidth()/4+handler.getWidth()/48,handler.getHeight()/5 + 250);
             for (int i = 0; i< entityManager.playerShip.getHealth();i++) {
                 g.drawImage(Images.galagaPlayer[0], (handler.getWidth() - handler.getWidth() / 4 + handler.getWidth() / 48) + ((entityManager.playerShip.width*2)*i), handler.getHeight()-handler.getHeight()/4, handler.getWidth() / 18, handler.getHeight() / 18, null);
             }

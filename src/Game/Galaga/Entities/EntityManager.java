@@ -7,12 +7,14 @@ import java.util.ArrayList;
  * Created by AlexVR on 1/25/2020
  */
 public class EntityManager {
-
+	public boolean [] [] enemyPositions;
     public ArrayList<BaseEntity> entities;
     public PlayerShip playerShip;
+    public EnemyBee enemyBee;
 
     public EntityManager(PlayerShip playerShip) {
-        entities = new ArrayList<>();
+        enemyPositions = new boolean[5][8];
+    	entities = new ArrayList<>();
         this.playerShip = playerShip;
     }
 

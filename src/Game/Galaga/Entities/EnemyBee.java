@@ -12,7 +12,7 @@ public class EnemyBee extends BaseEntity {
     boolean justSpawned=true,attacking=false, positioned=false,hit=false,centered = false;
     Animation idle,turn90Left;
     int spawnPos;//0 is left 1 is top, 2 is right, 3 is bottom
-    int formationX,formationY,speed,centerCoolDown=60;
+    int formationX,formationY,speed,centerCoolDown=60,attackCoolDown=60,deathCoolDown=120;
     int timeAlive=0;
     public EnemyBee(int x, int y, int width, int height, Handler handler,int row, int col) {
         super(x, y, width, height, Images.galagaEnemyBee[0], handler);
@@ -30,7 +30,7 @@ public class EnemyBee extends BaseEntity {
     }
 
     private void spawn() {
-        spawnPos = random.nextInt(4);
+        spawnPos = random.nextInt(3);
         switch (spawnPos){
             case 0://left
                 x = (handler.getWidth()/4)-width;
@@ -44,10 +44,10 @@ public class EnemyBee extends BaseEntity {
                 x = (handler.getWidth()/2)+ width + (handler.getWidth()/4);
                 y = random.nextInt(handler.getHeight()-handler.getHeight()/8);
                 break;
-            case 3://down
-                x = random.nextInt((handler.getWidth()/2))+handler.getWidth()/4;
-                y = handler.getHeight()+height;
-                break;
+          //case 3://down
+            //  x = random.nextInt((handler.getWidth()/2))+handler.getWidth()/4;
+            //  y = handler.getHeight()+height;
+            //  break;
         }
         bounds.x=x;
         bounds.y=y;
@@ -146,9 +146,31 @@ public class EnemyBee extends BaseEntity {
                 }
             }
         }else if (positioned){
+        	if(attackCoolDown > 0) {
+        		attackCoolDown--;
+        	}
+        	if(attackCoolDown == 0) {
+        		attacking = true;
+        		positioned = false;
+        		
+        	}
 
-        }else if (attacking){
-
+        }else if (attacking && Point.distance(x,y,handler.getGalagaState().entityManager.playerShip.x,handler.getGalagaState().entityManager.playerShip.y)>speed ){
+        	if(x < handler.getGalagaState().entityManager.playerShip.x) {
+        		x+=speed;
+        	}
+        	if(x > handler.getGalagaState().entityManager.playerShip.x) {
+        		x-=speed;
+        	}
+        	y+=speed;
+        	if(!hit) {
+        		if(deathCoolDown > 0) {
+        			deathCoolDown--;
+        		}
+        		if(deathCoolDown == 0) {
+        		damage(new PlayerLaser(0,0,0,0,Images.galagaPlayerLaser,handler,handler.getGalagaState().entityManager));
+        		}
+        	}
         }
         bounds.x=x;
         bounds.y=y;
@@ -172,6 +194,13 @@ public class EnemyBee extends BaseEntity {
         super.damage(damageSource);
         if (damageSource instanceof PlayerLaser){
             hit=true;
+            if (hit) {
+            	handler.getScoreManager().addGalagaCurrentScore(100);
+            	if(handler.getScoreManager().getGalagaCurrentScore() > handler.getScoreManager().getGalagaHighScore()) {
+            		int updatedScore = handler.getScoreManager().getGalagaCurrentScore();
+            		handler.getScoreManager().setGalagaHighScore(updatedScore);
+            	}
+            }
             handler.getMusicHandler().playEffect("explosion.wav");
             damageSource.remove = true;
         }

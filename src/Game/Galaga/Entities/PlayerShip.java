@@ -16,6 +16,7 @@ public class PlayerShip extends BaseEntity{
     private int health = 3,attackCooldown = 30,speed =6,destroyedCoolDown = 60*7;
     private boolean attacking = false, destroyed = false;
     private Animation deathAnimation;
+    int count = 0;
 
 
      public PlayerShip(int x, int y, int width, int height, BufferedImage sprite, Handler handler) {
@@ -45,6 +46,21 @@ public class PlayerShip extends BaseEntity{
                 } else {
                     attackCooldown--;
                 }
+            }
+            
+            if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_P)){
+            	boolean isFree = true;
+            	while(isFree) {
+            		if(count == 16) break;
+            		int row = random.nextInt(2) + 3;
+                	int col = random.nextInt(8);
+                	if(!handler.getGalagaState().entityManager.enemyPositions[row][col]) {
+                		handler.getGalagaState().entityManager.entities.add(new EnemyBee(0,0,32,32,handler,row,col));
+                		count++;
+                		isFree = false;
+                		handler.getGalagaState().entityManager.enemyPositions[row][col] = true;
+                	}
+            	}
             }
             if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ENTER) && !attacking) {
                 handler.getMusicHandler().playEffect("laser.wav");
