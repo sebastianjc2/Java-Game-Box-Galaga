@@ -155,22 +155,22 @@ public class EnemyBee extends BaseEntity {
         		
         	}
 
-        }else if (attacking && Point.distance(x,y,handler.getGalagaState().entityManager.playerShip.x,handler.getGalagaState().entityManager.playerShip.y)>speed ){
-        	if(x < handler.getGalagaState().entityManager.playerShip.x) {
-        		x+=speed;
-        	}
-        	if(x > handler.getGalagaState().entityManager.playerShip.x) {
-        		x-=speed;
-        	}
-        	y+=speed;
-        	if(!hit) {
-        		if(deathCoolDown > 0) {
-        			deathCoolDown--;
-        		}
-        		if(deathCoolDown == 0) {
-        		damage(new PlayerLaser(0,0,0,0,Images.galagaPlayerLaser,handler,handler.getGalagaState().entityManager));
-        		}
-        	}
+        //}else if (attacking && Point.distance(x,y,handler.getGalagaState().entityManager.playerShip.x,handler.getGalagaState().entityManager.playerShip.y)>speed ){
+        	//if(x < handler.getGalagaState().entityManager.playerShip.x) {
+        		//x+=speed;
+        	//}
+        	//if(x > handler.getGalagaState().entityManager.playerShip.x) {
+        		//x-=speed;
+        	//}
+        	//y+=speed;
+        	//if(!hit) {
+        		//if(deathCoolDown > 0) {
+        			//deathCoolDown--;
+        		//}
+        		//if(deathCoolDown == 0) {
+        		//damage(new PlayerLaser(0,0,0,0,Images.galagaPlayerLaser,handler,handler.getGalagaState().entityManager));
+        		//}
+        	//}
         }
         bounds.x=x;
         bounds.y=y;
