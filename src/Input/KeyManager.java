@@ -11,8 +11,8 @@ import java.awt.event.KeyListener;
 public class KeyManager implements KeyListener {
 
 	private boolean[] keys,justPressed,cantPress;
-	public boolean up=false, down=false, left=false, right=false, suicide=false, life_up=false;
-	public boolean pausebutt=false;
+	public boolean up=false, down=false, left=false, right=false, suicide=false, life_up=false, beeSpawn = false, enemySpawn=false;
+	public boolean pausebutt=false, enemyLaser=false;
 
 
 	public KeyManager(){
@@ -44,6 +44,9 @@ public class KeyManager implements KeyListener {
 		pausebutt = keys[KeyEvent.VK_ESCAPE];
 		suicide = keys[KeyEvent.VK_N];
 		life_up = keys[KeyEvent.VK_L];
+		beeSpawn = keys[KeyEvent.VK_P];
+		enemySpawn = keys[KeyEvent.VK_O];
+		enemyLaser = keys[KeyEvent.VK_K];
 	}
 
 	@Override

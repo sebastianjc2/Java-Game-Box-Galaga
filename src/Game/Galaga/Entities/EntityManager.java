@@ -11,6 +11,7 @@ public class EntityManager {
     public ArrayList<BaseEntity> entities;
     public PlayerShip playerShip;
     public EnemyBee enemyBee;
+    public NewEnemy NewEnemy;
 
     public EntityManager(PlayerShip playerShip) {
         enemyPositions = new boolean[5][8];

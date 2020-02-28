@@ -49,19 +49,36 @@ public class PlayerShip extends BaseEntity{
             }
             
             if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_P)){
-            	boolean isFree = true;
-            	while(isFree) {
-            		if(count == 16) break;
-            		int row = random.nextInt(2) + 3;
-                	int col = random.nextInt(8);
-                	if(!handler.getGalagaState().entityManager.enemyPositions[row][col]) {
-                		handler.getGalagaState().entityManager.entities.add(new EnemyBee(0,0,32,32,handler,row,col));
-                		count++;
-                		isFree = false;
-                		handler.getGalagaState().entityManager.enemyPositions[row][col] = true;
-                	}
+
+            	int row = random.nextInt(2) + 3;
+            	int col = random.nextInt(8);
+            	int counts =0;
+            	while(handler.getGalagaState().entityManager.enemyPositions[row][col] && counts < handler.getGalagaState().entityManager.enemyPositions.length ) {
+            		row = random.nextInt(2) + 3;
+            		col = random.nextInt(8);	
+            		counts ++;
+
             	}
+            	handler.getGalagaState().entityManager.entities.add(new EnemyBee(0,0,32,32,handler,row,col));
+            	handler.getGalagaState().entityManager.enemyPositions[row][col] = true;  	
+            	
             }
+            
+            if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_O)){
+            	int row = random.nextInt(3);
+            	int col = random.nextInt(6) + 1;
+            	int counts =0;
+            	while(handler.getGalagaState().entityManager.enemyPositions[row][col] && counts < handler.getGalagaState().entityManager.enemyPositions.length ) {
+            		row = random.nextInt(3);
+            		col = random.nextInt(6) + 1;	
+            		counts ++;
+
+            	}
+            	handler.getGalagaState().entityManager.enemyPositions[row][col] = true;
+            	handler.getGalagaState().entityManager.entities.add(new NewEnemy(0,0,32,32,handler,row,col));
+            	
+            }
+            
             if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ENTER) && !attacking) {
                 handler.getMusicHandler().playEffect("laser.wav");
                 attackCooldown = 30;
@@ -69,6 +86,13 @@ public class PlayerShip extends BaseEntity{
                 handler.getGalagaState().entityManager.entities.add(new PlayerLaser(this.x + (width / 2), this.y - 3, width / 5, height / 2, Images.galagaPlayerLaser, handler, handler.getGalagaState().entityManager));
 
             }
+            
+//            if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_K)) {
+//                handler.getMusicHandler().playEffect("laser.wav");
+//                attackCooldown = 30;
+//                handler.getGalagaState().entityManager.entities.add(new EnemyLaser(this.x + (width / 2), this.y - 3, width / 5, height / 2, Images.galagaPlayerLaser, handler, handler.getGalagaState().entityManager));
+//
+//            }
             if (handler.getKeyManager().left && (x - speed > (handler.getWidth()/4))) {
                 x -= (speed);
             }

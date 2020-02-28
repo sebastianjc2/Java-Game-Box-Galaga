@@ -143,6 +143,8 @@ public class EnemyBee extends BaseEntity {
                     //more than 2 minutes in this state then die
                     //60 ticks in a second, times 60 is a minute, times 2 is a minute
                     damage(new PlayerLaser(0,0,0,0,Images.galagaPlayerLaser,handler,handler.getGalagaState().entityManager));
+                    handler.getScoreManager().addGalagaCurrentScore(-100);
+            		handler.getScoreManager().setGalagaHighScore(handler.getScoreManager().getGalagaCurrentScore());
                 }
             }
         }else if (positioned){
@@ -155,22 +157,24 @@ public class EnemyBee extends BaseEntity {
         		
         	}
 
-        //}else if (attacking && Point.distance(x,y,handler.getGalagaState().entityManager.playerShip.x,handler.getGalagaState().entityManager.playerShip.y)>speed ){
-        	//if(x < handler.getGalagaState().entityManager.playerShip.x) {
-        		//x+=speed;
-        	//}
-        	//if(x > handler.getGalagaState().entityManager.playerShip.x) {
-        		//x-=speed;
-        	//}
-        	//y+=speed;
-        	//if(!hit) {
-        		//if(deathCoolDown > 0) {
-        			//deathCoolDown--;
-        		//}
-        		//if(deathCoolDown == 0) {
-        		//damage(new PlayerLaser(0,0,0,0,Images.galagaPlayerLaser,handler,handler.getGalagaState().entityManager));
-        		//}
-        	//}
+        }else if (attacking){
+        	if(x < handler.getGalagaState().entityManager.playerShip.x) {
+        		x+=speed;
+        	}
+        	if(x > handler.getGalagaState().entityManager.playerShip.x) {
+        		x-=speed;
+        	}
+        	y+=speed;
+        	if(!hit) {
+        		if(deathCoolDown > 0) {
+        			deathCoolDown--;
+        		}
+        		if(deathCoolDown == 0) {
+        		damage(new PlayerLaser(0,0,0,0,Images.galagaPlayerLaser,handler,handler.getGalagaState().entityManager));
+        		handler.getScoreManager().addGalagaCurrentScore(-100);
+        		handler.getScoreManager().setGalagaHighScore(handler.getScoreManager().getGalagaCurrentScore());
+        		}
+        	}
         }
         bounds.x=x;
         bounds.y=y;
@@ -203,6 +207,8 @@ public class EnemyBee extends BaseEntity {
             }
             handler.getMusicHandler().playEffect("explosion.wav");
             damageSource.remove = true;
+    		handler.getGalagaState().entityManager.enemyPositions[row][col] = false;
+
         }
     }
 }
