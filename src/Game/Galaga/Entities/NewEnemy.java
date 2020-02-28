@@ -55,7 +55,6 @@ public class NewEnemy extends BaseEntity {
 
     @Override
     public void tick() {
-    	
         super.tick();
         idle.tick();
         if (attacking) {
@@ -129,6 +128,8 @@ public class NewEnemy extends BaseEntity {
                     //more than 2 minutes in this state then die
                     //60 ticks in a second, times 60 is a minute, times 2 is a minute
                     damage(new PlayerLaser(0,0,0,0,Images.galagaPlayerLaser,handler,handler.getGalagaState().entityManager));
+                    handler.getScoreManager().addGalagaCurrentScore(-100);
+            		handler.getScoreManager().setGalagaHighScore(handler.getScoreManager().getGalagaCurrentScore());
                 }
 
             }else {//move to formation
@@ -159,10 +160,19 @@ public class NewEnemy extends BaseEntity {
                     //more than 2 minutes in this state then die
                     //60 ticks in a second, times 60 is a minute, times 2 is a minute
                     damage(new PlayerLaser(0,0,0,0,Images.galagaPlayerLaser,handler,handler.getGalagaState().entityManager));
+                    handler.getScoreManager().addGalagaCurrentScore(-100);
+            		handler.getScoreManager().setGalagaHighScore(handler.getScoreManager().getGalagaCurrentScore());
                 }
             }
         }else if (positioned){
-
+        	if(attackCoolDown > 0) {
+        		attackCoolDown--;
+        	}
+        	if(attackCoolDown == 0) {
+        		attacking = true;
+        		positioned = false;
+        		
+        	}
         }
         bounds.x=x;
         bounds.y=y;

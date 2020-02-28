@@ -52,7 +52,7 @@ public class PlayerShip extends BaseEntity{
 
             	int row = random.nextInt(2) + 3;
             	int col = random.nextInt(8);
-            	int counts =0;
+            	int counts = 0;
             	while(counts < handler.getGalagaState().entityManager.enemyPositions.length ) {
             		row = random.nextInt(2) + 3;
             		col = random.nextInt(8);
@@ -70,8 +70,8 @@ public class PlayerShip extends BaseEntity{
             if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_O)){
             	int row = random.nextInt(3);
             	int col = random.nextInt(6) + 1;
-            	int counts =0;
-            	while(counts < handler.getGalagaState().entityManager.enemyPositions.length ) {
+            	int counts = 0;
+            	while(counts < handler.getGalagaState().entityManager.enemyPositions.length) {
             		row = random.nextInt(3);
             		col = random.nextInt(6) + 1;
             		if (!handler.getGalagaState().entityManager.enemyPositions[row][col]) {
