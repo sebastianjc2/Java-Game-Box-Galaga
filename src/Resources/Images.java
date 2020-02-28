@@ -17,6 +17,7 @@ public class Images {
     public static BufferedImage galagaSelect;
     public static BufferedImage muteIcon;
     public static BufferedImage galagaPlayerLaser;
+    public static BufferedImage galagaEnemyLaser;
     public static BufferedImage[] startGameButton;
     public static BufferedImage[] galagaLogo;
     public static BufferedImage[] pauseResumeButton;
@@ -108,6 +109,9 @@ public class Images {
             galagaNewEnemy[1] = galagaSpriteSheet.crop(185, 128, 15, 15);
             
             galagaPlayerLaser = galagaSpriteSheet.crop(365 ,219,3,8);
+            
+            galagaEnemyLaser = galagaSpriteSheet.crop(374, 51,3,8);
+
 
 
 

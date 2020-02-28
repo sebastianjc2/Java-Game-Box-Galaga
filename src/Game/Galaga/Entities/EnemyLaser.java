@@ -21,7 +21,7 @@ public class EnemyLaser extends BaseEntity {
     public void tick() {
         if (!remove) {
             super.tick();
-            y -= speed;
+            y += speed;
             bounds.y = y;
             for (BaseEntity enemy : enemies.entities) {
                 if (enemy instanceof NewEnemy || enemy instanceof EnemyLaser) {

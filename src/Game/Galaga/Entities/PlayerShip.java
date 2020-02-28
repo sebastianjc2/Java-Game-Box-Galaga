@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
  */
 public class PlayerShip extends BaseEntity{
 
-    private int health = 3,attackCooldown = 30,speed =6,destroyedCoolDown = 60*7;
+    private int health = 3,attackCooldown = 30,speed =7,destroyedCoolDown = 60*7;
     private boolean attacking = false, destroyed = false;
     private Animation deathAnimation;
     int count = 0;
@@ -53,14 +53,17 @@ public class PlayerShip extends BaseEntity{
             	int row = random.nextInt(2) + 3;
             	int col = random.nextInt(8);
             	int counts =0;
-            	while(handler.getGalagaState().entityManager.enemyPositions[row][col] && counts < handler.getGalagaState().entityManager.enemyPositions.length ) {
+            	while(counts < handler.getGalagaState().entityManager.enemyPositions.length ) {
             		row = random.nextInt(2) + 3;
-            		col = random.nextInt(8);	
+            		col = random.nextInt(8);
+            		if (!handler.getGalagaState().entityManager.enemyPositions[row][col]) {
+                    	handler.getGalagaState().entityManager.entities.add(new EnemyBee(0,0,32,32,handler,row,col));
+                    	handler.getGalagaState().entityManager.enemyPositions[row][col] = true;
+                    	counts = handler.getGalagaState().entityManager.enemyPositions.length;
+					}
             		counts ++;
 
             	}
-            	handler.getGalagaState().entityManager.entities.add(new EnemyBee(0,0,32,32,handler,row,col));
-            	handler.getGalagaState().entityManager.enemyPositions[row][col] = true;  	
             	
             }
             
@@ -68,15 +71,17 @@ public class PlayerShip extends BaseEntity{
             	int row = random.nextInt(3);
             	int col = random.nextInt(6) + 1;
             	int counts =0;
-            	while(handler.getGalagaState().entityManager.enemyPositions[row][col] && counts < handler.getGalagaState().entityManager.enemyPositions.length ) {
+            	while(counts < handler.getGalagaState().entityManager.enemyPositions.length ) {
             		row = random.nextInt(3);
-            		col = random.nextInt(6) + 1;	
+            		col = random.nextInt(6) + 1;
+            		if (!handler.getGalagaState().entityManager.enemyPositions[row][col]) {
+                    	handler.getGalagaState().entityManager.entities.add(new NewEnemy(0,0,32,32,handler,row,col));
+                    	handler.getGalagaState().entityManager.enemyPositions[row][col] = true;
+                    	counts = handler.getGalagaState().entityManager.enemyPositions.length;
+            		}	
             		counts ++;
 
-            	}
-            	handler.getGalagaState().entityManager.enemyPositions[row][col] = true;
-            	handler.getGalagaState().entityManager.entities.add(new NewEnemy(0,0,32,32,handler,row,col));
-            	
+            	}            	
             }
             
             if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ENTER) && !attacking) {
@@ -86,13 +91,7 @@ public class PlayerShip extends BaseEntity{
                 handler.getGalagaState().entityManager.entities.add(new PlayerLaser(this.x + (width / 2), this.y - 3, width / 5, height / 2, Images.galagaPlayerLaser, handler, handler.getGalagaState().entityManager));
 
             }
-            
-//            if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_K)) {
-//                handler.getMusicHandler().playEffect("laser.wav");
-//                attackCooldown = 30;
-//                handler.getGalagaState().entityManager.entities.add(new EnemyLaser(this.x + (width / 2), this.y - 3, width / 5, height / 2, Images.galagaPlayerLaser, handler, handler.getGalagaState().entityManager));
-//
-//            }
+
             if (handler.getKeyManager().left && (x - speed > (handler.getWidth()/4))) {
                 x -= (speed);
             }

@@ -1,6 +1,7 @@
 package Game.Galaga.Entities;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 /**
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 public class EntityManager {
 	public boolean [] [] enemyPositions;
     public ArrayList<BaseEntity> entities;
+    public ArrayList<BaseEntity> shots;
     public PlayerShip playerShip;
     public EnemyBee enemyBee;
     public NewEnemy NewEnemy;
@@ -16,6 +18,7 @@ public class EntityManager {
     public EntityManager(PlayerShip playerShip) {
         enemyPositions = new boolean[5][8];
     	entities = new ArrayList<>();
+    	shots = new ArrayList<>();
         this.playerShip = playerShip;
     }
 
@@ -32,6 +35,10 @@ public class EntityManager {
                 playerShip.damage(entity);
             }
         }
+        for (BaseEntity s : shots) {
+			entities.add(s);
+		}
+        shots.clear();
         for (BaseEntity toErase:toRemove){
             entities.remove(toErase);
         }

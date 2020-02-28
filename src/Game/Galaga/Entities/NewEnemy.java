@@ -14,7 +14,7 @@ public class NewEnemy extends BaseEntity {
     Animation idle;
     int spawnPos;//0 is left 1 is top, 2 is right, 3 is bottom
     int formationX,formationY,speed,centerCoolDown=60,attackCoolDown=60,deathCoolDown=120;
-    int timeAlive=0;
+    int timeAlive=0,attackCooldown = 30;
     public NewEnemy(int x, int y, int width, int height, Handler handler,int row, int col) {
         super(x, y, width, height, Images.galagaNewEnemy[0], handler);
         this.row = row;
@@ -44,10 +44,10 @@ public class NewEnemy extends BaseEntity {
                 x = (handler.getWidth()/2)+ width + (handler.getWidth()/4);
                 y = random.nextInt(handler.getHeight()-handler.getHeight()/8);
                 break;
-          //case 3://down
-            //  x = random.nextInt((handler.getWidth()/2))+handler.getWidth()/4;
-            //  y = handler.getHeight()+height;
-            //  break;
+//          case 3://down
+//              x = random.nextInt((handler.getWidth()/2))+handler.getWidth()/4;
+//              y = handler.getHeight()+height;
+//              break;
         }
         bounds.x=x;
         bounds.y=y;
@@ -55,8 +55,24 @@ public class NewEnemy extends BaseEntity {
 
     @Override
     public void tick() {
+    	
         super.tick();
         idle.tick();
+        if (attacking) {
+            if (attackCooldown <= 0) {
+                attacking = false;
+            } else {
+                attackCooldown--;
+            }
+        }
+        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_K) && !attacking) {
+            handler.getMusicHandler().playEffect("laser.wav");
+            attackCooldown = 30;
+            attacking = true;
+            handler.getGalagaState().entityManager.shots.add(new EnemyLaser(this.x + (width / 2), this.y - 3, width / 5, height / 2, Images.galagaEnemyLaser, handler, handler.getGalagaState().entityManager));
+
+        }
+
         if (hit){
             if (enemyDeath.end){
                 remove = true;
@@ -146,38 +162,7 @@ public class NewEnemy extends BaseEntity {
                 }
             }
         }else if (positioned){
-        	if(attackCoolDown > 0) {
-        		attackCoolDown--;
-        	}
-        	if(attackCoolDown == 0) {
-        		attacking = true;
-        		positioned = false;
-        	}
-        		
-        	if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_K)) {
-                 handler.getMusicHandler().playEffect("laser.wav");
-                 handler.getGalagaState().entityManager.entities.add(new EnemyLaser(this.x + (width / 2), this.y - 3, width / 5, height / 2, Images.galagaPlayerLaser, handler, handler.getGalagaState().entityManager));
 
-                 }
-        		
-        	
-
-//        }else if (attacking && Point.distance(x,y,handler.getGalagaState().entityManager.playerShip.x,handler.getGalagaState().entityManager.playerShip.y)>speed ){
-//        	if(x < handler.getGalagaState().entityManager.playerShip.x) {
-//        		x+=speed;
-//        	}
-//        	if(x > handler.getGalagaState().entityManager.playerShip.x) {
-//        		x-=speed;
-//        	}
-//        	y+=speed;
-//        	if(!hit) {
-//        		if(deathCoolDown > 0) {
-//        			deathCoolDown--;
-//        		}
-//        		if(deathCoolDown == 0) {
-//        		damage(new PlayerLaser(0,0,0,0,Images.galagaPlayerLaser,handler,handler.getGalagaState().entityManager));
-//        		}
-//        	}
         }
         bounds.x=x;
         bounds.y=y;
@@ -213,5 +198,14 @@ public class NewEnemy extends BaseEntity {
     		handler.getGalagaState().entityManager.enemyPositions[row][col] = false;
 
         }
+    }
+
+
+    public boolean isAttacking() {
+        return attacking;
+    }
+
+    public void setAttacking(boolean attacking) {
+        this.attacking = attacking;
     }
 }
