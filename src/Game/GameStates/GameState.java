@@ -7,6 +7,7 @@ import Main.Handler;
 import Resources.Images;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 /**
  * Created by AlexVR on 1/24/2020.
@@ -26,6 +27,7 @@ public class GameState extends State {
 
         handler.getMouseManager().setUimanager(uiManager);
         uiManager.tick();
+        
 
     }
 
